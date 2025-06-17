@@ -1,60 +1,69 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
-
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7C7VW8G5VX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-7C7VW8G5VX');
-</script>
-
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Keranjang Belanja</title>
+  <title>Deskripsi Produk</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <h1>Keranjang Anda</h1>
-    <nav>
-      <a href="index.html">⬅️ Kembali Belanja</a>
-    </nav>
+    <a href="index.html">⬅️ Kembali</a>
+    <h1>Detail Produk</h1>
   </header>
 
-  <main class="product-list" id="cart-items">
-    <!-- Produk akan muncul di sini -->
+  <main class="product-list" id="product-detail">
+    <!-- Detail produk muncul di sini -->
   </main>
 
   <script>
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const container = document.getElementById("cart-items");
+    const products = [
+      {
+        id: 1,
+        name: "Gantungan AR",
+        price: 25000,
+        images: [
+          "https://via.placeholder.com/200x150?text=Gantungan1",
+          "https://via.placeholder.com/200x150?text=Gantungan2"
+        ],
+        description: "Gantungan kunci eksklusif dengan teknologi AR."
+      },
+      {
+        id: 2,
+        name: "ID Card AR",
+        price: 30000,
+        images: [
+          "https://via.placeholder.com/200x150?text=ID1",
+          "https://via.placeholder.com/200x150?text=ID2"
+        ],
+        description: "ID card keren yang bisa menampilkan augmented reality."
+      }
+    ];
 
-    const adminNumber = "6281234567890"; // GANTI dengan nomor WA admin kamu
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = parseInt(urlParams.get("product"));
+    const product = products.find(p => p.id === productId);
 
-    if (cart.length === 0) {
-      container.innerHTML = "<p>Keranjang Anda kosong.</p>";
+    const container = document.getElementById("product-detail");
+
+    if (!product) {
+      container.innerHTML = "<p>Produk tidak ditemukan.</p>";
     } else {
-      cart.forEach(item => {
-        const message = encodeURIComponent(`Halo admin, saya ingin membeli produk *${item.name}* dengan harga Rp${item.price.toLocaleString()}.`);
-        const waLink = `https://wa.me/${adminNumber}?text=${message}`;
-        
-        container.innerHTML += `
-          <div class="product">
-            <img src="${item.image}" alt="${item.name}" />
-            <h3>${item.name}</h3>
-            <p>Rp${item.price.toLocaleString()}</p>
-            <a href="${waLink}" target="_blank">
-              <button>Hubungi Admin via WhatsApp</button>
-            </a>
-          </div>
-        `;
-      });
+      const adminNumber = "6285880541399"; // GANTI nomor admin WA
+      const message = encodeURIComponent(`Halo admin, saya tertarik membeli produk *${product.name}* seharga Rp${product.price.toLocaleString()}.`);
+      const waLink = `https://wa.me/${adminNumber}?text=${message}`;
+
+      container.innerHTML = `
+        <div class="product">
+          ${product.images.map(img => `<img src="${img}" alt="${product.name}" />`).join('')}
+          <h3>${product.name}</h3>
+          <p>Rp${product.price.toLocaleString()}</p>
+          <p>${product.description}</p>
+          <a href="${waLink}" target="_blank">
+            <button>Hubungi Admin via WhatsApp</button>
+          </a>
+        </div>
+      `;
     }
   </script>
 </body>

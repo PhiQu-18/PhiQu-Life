@@ -12,16 +12,8 @@ if (list) {
         <img src="${p.image}" alt="${p.name}" />
         <h3>${p.name}</h3>
         <p>Rp${p.price.toLocaleString()}</p>
-        <button onclick="addToCart(${p.id})">Tambah ke Keranjang</button>
+        <a href="cart.html?product=${p.id}"><button>Lihat Deskripsi</button></a>
       </div>
     `;
   });
-}
-
-function addToCart(productId) {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const item = products.find(p => p.id === productId);
-  cart.push(item);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  alert(`${item.name} ditambahkan ke keranjang!`);
 }
