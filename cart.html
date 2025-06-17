@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7C7VW8G5VX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7C7VW8G5VX');
+</script>
+
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keranjang Belanja</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Keranjang Anda</h1>
+    <nav>
+      <a href="index.html">⬅️ Kembali Belanja</a>
+    </nav>
+  </header>
+
+  <main class="product-list" id="cart-items">
+    <!-- Produk akan muncul di sini -->
+  </main>
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const container = document.getElementById("cart-items");
+
+    const adminNumber = "6281234567890"; // GANTI dengan nomor WA admin kamu
+
+    if (cart.length === 0) {
+      container.innerHTML = "<p>Keranjang Anda kosong.</p>";
+    } else {
+      cart.forEach(item => {
+        const message = encodeURIComponent(`Halo admin, saya ingin membeli produk *${item.name}* dengan harga Rp${item.price.toLocaleString()}.`);
+        const waLink = `https://wa.me/${adminNumber}?text=${message}`;
+        
+        container.innerHTML += `
+          <div class="product">
+            <img src="${item.image}" alt="${item.name}" />
+            <h3>${item.name}</h3>
+            <p>Rp${item.price.toLocaleString()}</p>
+            <a href="${waLink}" target="_blank">
+              <button>Hubungi Admin via WhatsApp</button>
+            </a>
+          </div>
+        `;
+      });
+    }
+  </script>
+</body>
+</html>
