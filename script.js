@@ -1,6 +1,5 @@
 const products = [
-  { id: 1, name: "Gantungan AR", price: 25000, image: "https://via.placeholder.com/200x150" },
-  { id: 2, name: "ID Card AR", price: 30000, image: "https://via.placeholder.com/200x150" },
+  { id: 1, name: "Gantungan AR", price: 15000, image: "produk-design/234.jpg" },
 ];
 
 const list = document.getElementById("product-list");
