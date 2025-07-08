@@ -78,38 +78,6 @@
     .product-button:hover {
       background-color: #d63b1f;
     }
-
-    .product-desc {
-      background-color: #f9f9f9;
-      padding: 10px 14px;
-      border-radius: 8px;
-      border: 1px solid #eee;
-      margin-top: 12px;
-      text-align: left;
-      font-size: 0.95em;
-      line-height: 1.5;
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-
-    @media (max-width: 480px) {
-      header {
-        font-size: 1.4em;
-      }
-
-      .product-name {
-        font-size: 1em;
-      }
-
-      .product-price {
-        font-size: 0.95em;
-      }
-    }
   </style>
 </head>
 <body>
@@ -131,48 +99,27 @@
       },
       {
         id: 2,
-        name: "On- Going",
+        name: "On-Going",
         price: 0,
-        image: "",
-        description: "Produk akan segera rilis"
-      },
+        image: "produk-design/placeholder.jpg",
+        description: "Produk akan segera rilis."
+      }
     ];
 
-    const adminNumber = "6285880541399";
     const container = document.getElementById("product-container");
 
-    products.forEach((product, index) => {
-      const message = encodeURIComponent(
-        `Halo Admin, saya tertarik membeli produk *${product.name}* seharga Rp${product.price.toLocaleString()}.`
-      );
-      const waLink = `https://wa.me/${adminNumber}?text=${message}`;
-
+    products.forEach(product => {
       const productHTML = `
         <div class="product-card">
           <img src="${product.image}" alt="${product.name}" />
           <div class="product-name">${product.name}</div>
           <div class="product-price">Rp${product.price.toLocaleString()}</div>
-          <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-            <a class="product-button" href="${waLink}" target="_blank">Chat Admin</a>
-            <button class="product-button toggle-desc" data-index="${index}">Deskripsi Produk</button>
-          </div>
-          <div class="product-desc" id="desc-${index}">
-            ${product.description}
+          <div style="margin-top: 10px;">
+            <a class="product-button" href="detail.html?product=${product.id}">Lihat Produk</a>
           </div>
         </div>
       `;
-
       container.innerHTML += productHTML;
-    });
-
-    // Toggle deskripsi
-    document.addEventListener("click", function(e) {
-      if (e.target.classList.contains("toggle-desc")) {
-        const index = e.target.getAttribute("data-index");
-        const desc = document.getElementById(`desc-${index}`);
-        const isVisible = desc.style.display === "block";
-        desc.style.display = isVisible ? "none" : "block";
-      }
     });
   </script>
 

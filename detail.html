@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detail Produk</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fdfdfd;
+      color: #333;
+    }
+
+    header {
+      background-color: #ee4d2d;
+      color: white;
+      padding: 1em;
+      text-align: center;
+      font-size: 1.5em;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .container img {
+      max-width: 150px;      /* ✅ Ukuran gambar dibatasi */
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+
+    .price {
+      color: #ee4d2d;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    .desc {
+      margin-top: 10px;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 16px;
+      background-color: #ee4d2d;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background-color: #c9411b;
+    }
+
+    .back-link {
+      margin-bottom: 20px;
+      display: inline-block;
+      text-decoration: none;
+      color: #ee4d2d;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <header>Detail Produk</header>
+
+  <div class="container" id="product-detail">
+    <!-- Produk akan dimuat lewat JS -->
+  </div>
+
+  <script>
+    const products = [
+      {
+        id: 1,
+        name: "Gantungan AR Eksklusif",
+        price: 15000,
+        image: "produk-design/234.jpg",
+        description: "Gantungan kunci eksklusif dengan teknologi Augmented Reality. Cocok untuk hadiah unik atau identitas digital Anda."
+      },
+      {
+        id: 2,
+        name: "On-Going",
+        price: 0,
+        image: "produk-design/placeholder.jpg",
+        description: "Produk akan segera rilis."
+      }
+    ];
+
+    const adminNumber = "6285880541399";
+    const params = new URLSearchParams(window.location.search);
+    const productId = parseInt(params.get("product"));
+    const product = products.find(p => p.id === productId);
+
+    const container = document.getElementById("product-detail");
+
+    if (!product) {
+      container.innerHTML = "<p>Produk tidak ditemukan.</p>";
+    } else {
+      const waMsg = encodeURIComponent(`Halo Admin, saya tertarik membeli produk *${product.name}* seharga Rp${product.price.toLocaleString()}.`);
+      const waLink = `https://wa.me/${adminNumber}?text=${waMsg}`;
+
+      container.innerHTML = `
+        <a href="index.html" class="back-link">⬅ Kembali ke Daftar Produk</a>
+        <h2>${product.name}</h2>
+        <img src="${product.image}" alt="${product.name}" />
+        <div class="price">Rp${product.price.toLocaleString()}</div>
+        <div class="desc">${product.description}</div>
+        <a class="btn" href="${waLink}" target="_blank">Chat Admin</a>
+      `;
+    }
+  </script>
+
+</body>
+</html>
