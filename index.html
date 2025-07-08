@@ -1,34 +1,180 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
-
-      <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7C7VW8G5VX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-7C7VW8G5VX');
-</script>
-
-
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PhiQu Marketplace</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fdfdfd;
+      color: #333;
+    }
+
+    header {
+      background-color: #ee4d2d;
+      color: white;
+      padding: 1.5em;
+      text-align: center;
+      font-size: 1.8em;
+      font-weight: bold;
+    }
+
+    .marketplace {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      padding: 30px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .product-card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 16px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .product-card img {
+      width: 100%;
+      border-radius: 10px;
+      object-fit: cover;
+      max-height: 200px;
+    }
+
+    .product-name {
+      font-size: 1.2em;
+      margin: 12px 0 4px;
+      font-weight: 600;
+    }
+
+    .product-price {
+      color: #ee4d2d;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .product-button {
+      padding: 10px 18px;
+      background-color: #ee4d2d;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    .product-button:hover {
+      background-color: #d63b1f;
+    }
+
+    .product-desc {
+      background-color: #f9f9f9;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #eee;
+      margin-top: 12px;
+      text-align: left;
+      font-size: 0.95em;
+      line-height: 1.5;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    @media (max-width: 480px) {
+      header {
+        font-size: 1.4em;
+      }
+
+      .product-name {
+        font-size: 1em;
+      }
+
+      .product-price {
+        font-size: 0.95em;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <img src="foto/2.png" class="logo" alt="Logo PhiQu" />
-    <h1>PhiQu Marketplace</h1>
-  </header>
 
-  <main class="product-list" id="product-list">
-    <!-- Produk akan di-generate oleh JavaScript -->
+  <header>PhiQu Life: Fashion With AR</header>
+
+  <main class="marketplace" id="product-container">
+    <!-- Produk akan di-generate otomatis oleh JavaScript -->
   </main>
 
-  <script src="script.js"></script>
+  <script>
+    const products = [
+      {
+        id: 1,
+        name: "Gantungan AR Eksklusif",
+        price: 15000,
+        image: "produk-design/234.jpg",
+        description: "Gantungan kunci eksklusif dengan teknologi Augmented Reality. Cocok untuk hadiah unik atau identitas digital Anda."
+      },
+      {
+        id: 2,
+        name: "On- Going",
+        price: 0,
+        image: "",
+        description: "Produk akan segera rilis"
+      },
+    ];
+
+    const adminNumber = "6285880541399";
+    const container = document.getElementById("product-container");
+
+    products.forEach((product, index) => {
+      const message = encodeURIComponent(
+        `Halo Admin, saya tertarik membeli produk *${product.name}* seharga Rp${product.price.toLocaleString()}.`
+      );
+      const waLink = `https://wa.me/${adminNumber}?text=${message}`;
+
+      const productHTML = `
+        <div class="product-card">
+          <img src="${product.image}" alt="${product.name}" />
+          <div class="product-name">${product.name}</div>
+          <div class="product-price">Rp${product.price.toLocaleString()}</div>
+          <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+            <a class="product-button" href="${waLink}" target="_blank">Chat Admin</a>
+            <button class="product-button toggle-desc" data-index="${index}">Deskripsi Produk</button>
+          </div>
+          <div class="product-desc" id="desc-${index}">
+            ${product.description}
+          </div>
+        </div>
+      `;
+
+      container.innerHTML += productHTML;
+    });
+
+    // Toggle deskripsi
+    document.addEventListener("click", function(e) {
+      if (e.target.classList.contains("toggle-desc")) {
+        const index = e.target.getAttribute("data-index");
+        const desc = document.getElementById(`desc-${index}`);
+        const isVisible = desc.style.display === "block";
+        desc.style.display = isVisible ? "none" : "block";
+      }
+    });
+  </script>
+
 </body>
 </html>
